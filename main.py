@@ -26,6 +26,8 @@ class Game:
         self.platforms = pg.sprite.Group()
         self.player = Player(self)
         self.all_sprites.add(self.player)
+        self.bullet = Bullet(self)        
+        self.all_sprites.add(self.bullet)
         for plat in PLATFORM_LIST:
             p = Platform(*plat)
             self.all_sprites.add(p)
@@ -73,11 +75,12 @@ class Game:
 #                bullet.rect.y = Player.rect.y
 #                all_sprites.add(bullet)
 #                all_sprite.update()
-'''needs reworking, once i get the movement to work'''
+#'''needs reworking, once i get the movement to work'''
     def draw(self):
         # Game Loop - draw
         self.screen.fill(BLACK)
         self.all_sprites.draw(self.screen)
+        
         # *after* drawing everything, flip the display
         pg.display.flip()
 

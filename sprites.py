@@ -28,6 +28,9 @@ class Player(pg.sprite.Sprite):
         self.rect.x -= 1
         if hits:
             self.vel.y = -20
+    
+    def shoot(self):
+        bullet.getTarget(self)
 
     def update(self):
         self.acc = vec(0, PLAYER_GRAV)
@@ -36,8 +39,12 @@ class Player(pg.sprite.Sprite):
             self.acc.x = -PLAYER_ACC
         if keys[pg.K_d]:
             self.acc.x = PLAYER_ACC
-        if keys[pg.K_SPACE]:
-            bullet(self.game, self.pos, dir)
+        mouse = pg.mouse.get_pressed()
+        
+#        Player.update(self)
+        
+        if mouse[0]:
+            self.shoot()
 
         # apply friction
         self.acc.x += self.vel.x * PLAYER_FRICTION
@@ -54,14 +61,33 @@ class Player(pg.sprite.Sprite):
 
 
 class bullet(pg.sprite.Sprite):
-    def __init__(self, game, pos, dir):
-        self.groups = game.all_sprites
-        pg.sprite.Sprite.__init__(self, self.groups)
-        self.image = pg.Surface((10,10))
+    def __init__(self, game):
+        pg.sprite.Sprite.__init__(self)
+        self.image = pg.Surface((10, 10))
         self.rect = self.image.get_rect()
-
     
-    def update(self):
+    
+    def getTarget(self):
+        cur = pg.mouse.get_pos()
+        numFrames = 10
+        xdiff = cur[0] - self.rect.x
+        ydiff = cur[1] - self.rect.y    
+        self.xmove = xdiff//numFrames
+        self.ymove = ydiff//numFrames
+    
+    def travel(self):
+        self.rect.x += self.xmove
+        self.rect.y += self.ymove
+
+
+#    def __init__(self, game, pos, dir):
+#        self.groups = game.all_sprites
+#        pg.sprite.Sprite.__init__(self, self.groups)
+#        self.image = pg.Surface((10,10))
+#        self.rect = self.image.get_rect()
+#
+#    
+#    def update(self):
 '''        need to figure out a way to shoot the bullet towards where the cursor is
     meaning that the x and y velocity values cannot be numbers, but must instead 
     be functions?
