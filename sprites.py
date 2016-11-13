@@ -65,7 +65,7 @@ class bullet(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.image = pg.Surface((10, 10))
         self.rect = self.image.get_rect()
-    
+        self.mass = BULLMASS
     
     def getTarget(self):
         cur = pg.mouse.get_pos()

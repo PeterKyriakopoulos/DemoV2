@@ -25,8 +25,7 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.platforms = pg.sprite.Group()
         self.player = Player(self)
-        self.all_sprites.add(self.player)
-        self.bullet = Bullet(self)        
+        self.all_sprites.add(self.player)        
         self.all_sprites.add(self.bullet)
         for plat in PLATFORM_LIST:
             p = Platform(*plat)
@@ -42,6 +41,15 @@ class Game:
             self.events()
             self.update()
             self.draw()
+
+    def gravity(mass, xdif, ydif):
+#        mass is the mass of the bullet
+#       xdif and ydif are the distance of the bullet from the gravitational field
+        g = 10 '''gravitational constant, not actual value, but the one that will give the best performance gameplay wise
+        f = g*(gravity.mass*bullet.mass)//(xdif,ydif)
+        The graviational field will have to have a mass of its own, if this formula is to be used
+        unless the formula F = ma is used, in which case an acceleration will have to be given to the bullet'''
+        
 
     def update(self):
         # Game Loop - Update
