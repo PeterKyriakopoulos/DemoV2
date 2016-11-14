@@ -4,8 +4,8 @@ Created on Mon Nov  7 20:46:21 2016
 
 @author: Peter Kyriakopoulos
 """
-WIDTH = 1600
-HEIGHT = 900
+WIDTH = 800
+HEIGHT = 600
 FPS = 60
 
 TITLE = "Platform Demo"
