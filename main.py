@@ -25,8 +25,7 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.platforms = pg.sprite.Group()
         self.player = Player(self)
-        self.all_sprites.add(self.player)        
-        self.all_sprites.add(self.bullet)
+        self.all_sprites.add(self.player)
         for plat in PLATFORM_LIST:
             p = Platform(*plat)
             self.all_sprites.add(p)
@@ -42,30 +41,40 @@ class Game:
             self.update()
             self.draw()
 
+    def shoot(self):
+        self.bullet = bullet(self)
+        self.all_sprites.add(self.bullet)
+        self.bullet.getTarget()
+
     def gravity(mass, xdif, ydif):
 #        mass is the mass of the bullet
 #       xdif and ydif are the distance of the bullet from the gravitational field
-        g = 10 '''gravitational constant, not actual value, but the one that will give the best performance gameplay wise
+        g = 10
+        '''gravitational constant, not actual value, but the one that will give the best performance gameplay wise
         f = g*(gravity.mass*bullet.mass)//(xdif,ydif)
         The graviational field will have to have a mass of its own, if this formula is to be used
         unless the formula F = ma is used, in which case an acceleration will have to be given to the bullet'''
-        
+
 
     def update(self):
         # Game Loop - Update
         self.all_sprites.update()
         # check if player hits a platform - only if falling
-        if self.player.vel.y > 0:   
+        if self.player.vel.y > 0:
             hits = pg.sprite.spritecollide(self.player, self.platforms, False)
             if hits:
                 self.player.pos.y = hits[0].rect.top
                 self.player.vel.y = 0
+        mouse = pg.mouse.get_pressed()
+        if mouse[0]:
+            print("Bang!")
+            self.shoot()
 #        if self.player.vel.y < 0:
 #            hits = pg.sprite.spritecollide(self.player, self.platforms, False)
 #            if hits:
 #                self.player.pos.y = hits[0].rect.bottom
-#                self.player.vel.y = 0 
-                '''Still trying to figure out how to detect collision on all sides of the blocks'''
+#                self.player.vel.y = 0
+        '''Still trying to figure out how to detect collision on all sides of the blocks'''
 
     def events(self):
         # Game Loop - events
@@ -88,7 +97,7 @@ class Game:
         # Game Loop - draw
         self.screen.fill(BLACK)
         self.all_sprites.draw(self.screen)
-        
+
         # *after* drawing everything, flip the display
         pg.display.flip()
 

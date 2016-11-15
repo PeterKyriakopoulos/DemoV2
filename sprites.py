@@ -28,9 +28,6 @@ class Player(pg.sprite.Sprite):
         self.rect.x -= 1
         if hits:
             self.vel.y = -20
-    
-    def shoot(self):
-        bullet.getTarget(self)
 
     def update(self):
         self.acc = vec(0, PLAYER_GRAV)
@@ -39,12 +36,6 @@ class Player(pg.sprite.Sprite):
             self.acc.x = -PLAYER_ACC
         if keys[pg.K_d]:
             self.acc.x = PLAYER_ACC
-        mouse = pg.mouse.get_pressed()
-        
-#        Player.update(self)
-        
-        if mouse[0]:
-            self.shoot()
 
         # apply friction
         self.acc.x += self.vel.x * PLAYER_FRICTION
@@ -64,17 +55,18 @@ class bullet(pg.sprite.Sprite):
     def __init__(self, game):
         pg.sprite.Sprite.__init__(self)
         self.image = pg.Surface((10, 10))
+        self.image.fill(YELLOW)
         self.rect = self.image.get_rect()
         self.mass = BULLMASS
-    
+
     def getTarget(self):
         cur = pg.mouse.get_pos()
         numFrames = 10
         xdiff = cur[0] - self.rect.x
-        ydiff = cur[1] - self.rect.y    
+        ydiff = cur[1] - self.rect.y
         self.xmove = xdiff//numFrames
         self.ymove = ydiff//numFrames
-    
+
     def travel(self):
         self.rect.x += self.xmove
         self.rect.y += self.ymove
@@ -86,14 +78,14 @@ class bullet(pg.sprite.Sprite):
 #        self.image = pg.Surface((10,10))
 #        self.rect = self.image.get_rect()
 #
-#    
+#
 #    def update(self):
 '''        need to figure out a way to shoot the bullet towards where the cursor is
-    meaning that the x and y velocity values cannot be numbers, but must instead 
+    meaning that the x and y velocity values cannot be numbers, but must instead
     be functions?
     Not sure if i can use vector?
     Then mass needs to be added so that it can interfere with a gravitational field'''
-        
+
 
 class Platform(pg.sprite.Sprite):
     def __init__(self, x, y, w, h):
