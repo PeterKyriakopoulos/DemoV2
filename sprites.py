@@ -19,6 +19,7 @@ class Player(pg.sprite.Sprite):
         self.pos = vec(WIDTH // 2, HEIGHT // 2)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
+        self.mass = PLAYERMASS
 
     def jump(self):
         # jump only if standing on a platform
@@ -61,15 +62,12 @@ class bullet(pg.sprite.Sprite):
 
     def getTarget(self):
         cur = pg.mouse.get_pos()
-        numFrames = 10
         xdiff = cur[0] - self.rect.x
         ydiff = cur[1] - self.rect.y
-        self.xmove = xdiff//numFrames
-        self.ymove = ydiff//numFrames
-
-    def travel(self):
-        self.rect.x += self.xmove
-        self.rect.y += self.ymove
+        self.xmove = xdiff
+        self.ymove = ydiff
+        self.rect.x = self.xmove
+        self.rect.y = self.ymove
 
 
 #    def __init__(self, game, pos, dir):
