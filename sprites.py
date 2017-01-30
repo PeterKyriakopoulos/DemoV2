@@ -56,18 +56,18 @@ class bullet(pg.sprite.Sprite):
     def __init__(self, game):
         pg.sprite.Sprite.__init__(self)
         self.image = pg.Surface((10, 10))
-        self.image.fill(YELLOW)
+        self.image.fill(PURPLE)
         self.rect = self.image.get_rect()
         self.mass = BULLMASS
-
-    def getTarget(self):
-        cur = pg.mouse.get_pos()
-        xdiff = cur[0] - self.rect.x
-        ydiff = cur[1] - self.rect.y
-        self.xmove = xdiff
-        self.ymove = ydiff
-        self.rect.x = self.xmove
-        self.rect.y = self.ymove
+#
+#    def getTarget(self):
+#        cur = pg.mouse.get_pos()
+#        xdiff = cur[0] - self.player.rect.x
+#        ydiff = cur[1] - self.player.rect.y
+#        self.xmove = xdiff
+#        self.ymove = ydiff
+#        self.rect.x = self.xmove
+#        self.rect.y = self.ymove
 
 
 #    def __init__(self, game, pos, dir):
