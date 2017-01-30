@@ -4,7 +4,7 @@ Created on Mon Nov  7 20:49:25 2016
 
 @author: Peter Kyriakopoulos
 """
-
+import numpy as np
 import pygame as pg
 import random
 from settings import *
@@ -41,15 +41,26 @@ class Game:
             self.update()
             self.draw()
 
+
     def shoot(self):
         self.bullet = bullet(self)
         self.all_sprites.add(self.bullet)
-        self.bullet.getTarget()
+        cur = pg.mouse.get_pos()
+        xdiff = self.player.rect.x - cur[0] 
+        ydiff = self.player.rect.y - cur[1]
+        self.bullet.xmove = xdiff
+        self.bullet.ymove = ydiff
+        self.bullet.rect.x = self.bullet.xmove
+        self.bullet.rect.y = self.bullet.ymove
 
-    def gravity(mass, xdif, ydif):
-#        mass is the mass of the bullet
-#       xdif and ydif are the distance of the bullet from the gravitational field
-        g = 10
+#    def gravity(BULLMASS,mass, xdif, ydif):
+##        mass is the mass of the bullet
+##       xdif and ydif are the distance of the bullet from the gravitational field
+#        g = 10
+        
+#        force = (g * BULLMASS * mass*BulletPositionVector)//(np.linalg.norm(BulletPositionVector))**3
+#        Bullet position Vector would be the position of the bullet at any given time (assuming we get it as a matrix that would 
+#        be the way to create the field, in a way that only interacts with the bullets)
         '''gravitational constant, not actual value, but the one that will give the best performance gameplay wise
         f = g*(gravity.mass*bullet.mass)//(xdif,ydif)
         The graviational field will have to have a mass of its own, if this formula is to be used
